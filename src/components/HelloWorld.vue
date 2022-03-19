@@ -18,8 +18,8 @@
 <!--    </div>-->
     <button @click="fn()">放大</button>
     <magnify
-        :width="'400px'"
-        :height="'400px'"
+        :width="400"
+        :height="400"
         :zoom="[0, 0]"
         :zoom-rate="2"
         :box-style="boxStyle"
