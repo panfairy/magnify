@@ -18,23 +18,25 @@
 <!--    </div>-->
     <button @click="fn()">放大</button>
     <magnify
-        :img-url="'@/assets/demo.jpeg'"
         :width="'400px'"
         :height="'400px'"
+        :zoom="[0, 0]"
+        :zoom-rate="2"
         :box-style="boxStyle"
         :show-type="rShow"
-        :zoom-rate="2"
-        :line-style="'2px solid red'"
     ></magnify>
+    <yuanxian style="position: relative; top:800px;"></yuanxian>
   </div>
 </template>
 
 <script>
 import magnify from "@/components/magnify";
+import yuanxian from "@/components/yuanxian";
 
 export default {
   components: {
-    magnify
+    magnify,
+    yuanxian
   },
   data() {
     return {
@@ -42,7 +44,7 @@ export default {
       rightStyle: {},
       r_img: {},
       topShow: false,
-      rShow: false,
+      rShow: true,
       boxStyle: [
         {
           width: '100px',
@@ -65,6 +67,9 @@ export default {
   },
   methods: {
     fn () {
+      // this.boxStyle.forEach(item => {
+      //   item.transform = `translate(${item.top}, ${item.left})`
+      // })
       this.rShow = !this.rShow
     },
     magnify (topX, topY) {

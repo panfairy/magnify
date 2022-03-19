@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="origin" v-show="showType">
+    <div class="origin" :style="originImg" v-show="showType">
       <img
           src="@/assets/demo.jpeg"
           :style="originImg"
@@ -8,7 +8,7 @@
       />
       <div v-for="item in boxStyle" :style="item"></div>
     </div>
-    <div class="large" v-show="!showType">
+    <div class="large" :style="originImg" v-show="!showType">
       <img
           src="@/assets/demo.jpeg"
           :style="largeImg"
@@ -22,9 +22,6 @@
 <script>
 export default {
   props: {
-    imgUrl: {
-      type: String
-    },
     showType: {
       type: Boolean,
       default: true
@@ -33,20 +30,18 @@ export default {
       type: Number,
       default: 1
     },
+    zoom: {
+      type: Array,
+      default: [0, 0]
+    },
     width: {
-      type: String,
-      default: '400px'
+      type: String
     },
     height: {
-      type: String,
-      default: '400px'
+      type: String
     },
     boxStyle: {
       type: Array
-    },
-    lineStyle: {
-      type: String,
-      default: '1px solid red'
     }
   },
   data() {
@@ -56,8 +51,9 @@ export default {
         height: this.height,
       },
       largeImg: {
-        width: this.width,
-        height: this.height,
+        width: this.width * this.zoomRate,
+        height: this.height * this.zoomRate,
+        transform: `translate(-${this.zoom[0]}px, -${this.zoom[1]}px)`
       }
     }
   }
@@ -66,10 +62,16 @@ export default {
 
 <style scoped>
 .origin {
-
+  position: absolute;
 }
 
 .large {
-
+  overflow: hidden;
+  position: absolute;
 }
+
+/*.imageStyle {*/
+/*  display: inline-block;*/
+/*  position: absolute;*/
+/*}*/
 </style>
