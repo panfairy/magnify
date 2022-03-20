@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :style="originImg" style="display: inline-block;">
     <div class="origin" :style="originImg" v-show="showType">
       <img
           :src="getImg"
@@ -38,10 +38,10 @@ export default {
       default: [0, 0]
     },
     width: {
-      type: Number || String
+      type: Number
     },
     height: {
-      type: Number || String
+      type: Number
     },
     boxStyle: {
       type: Array,
@@ -83,10 +83,8 @@ export default {
     //   rem: 1 << 3
     // }
     // getImg() {
-    //   const url = '@/assets/demo.jpeg'
-    //   return require(url)
     //   const imgUrl = 'demo.jpeg';
-    //   let img = require('../assets/'+imgUrl);
+    //   const img = require('../assets/'+imgUrl);
     // },
     boxHandle() {
       if (this.boxStyle.length === 0) return
