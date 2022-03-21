@@ -49,20 +49,23 @@ export default {
       if (event.target.tagName !== 'IMG') {
         return false
       }
-      this.div = this.$refs.previewImgDiv
+      const div = this.$refs.previewImgDiv
       let originX = event.screenX
       let originY = event.screenY
       let translateX = this.translateX
       let translateY = this.translateY
-      this.move = (e) => {
+      const move = (e) => {
         let afterX = e.screenX
         let afterY = e.screenY
         this.translateX = translateX + (afterX - originX) / this.scale
         this.translateY = translateY + (afterY - originY) / this.scale
       }
-      this.div.addEventListener('mousemove', this.move)
-      this.div.addEventListener('mouseup', () => {
-        this.div.removeEventListener('mousemove', this.move)
+      div.addEventListener('mousemove', move)
+      div.addEventListener('mouseup', () => {
+        div.removeEventListener('mousemove', move)
+      })
+      div.addEventListener('mouseout', () => {
+        div.removeEventListener('mousemove', move)
       })
     },
     enterHandl() {
@@ -70,7 +73,6 @@ export default {
     },
     outHandle() {
       document.body.style.overflow = 'visible'
-      this.div.removeEventListener('mousemove', this.move)
     }
   }
 }
