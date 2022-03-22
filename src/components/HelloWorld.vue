@@ -1,41 +1,28 @@
 <template>
   <div>
     <button @click="fn()">切换</button>
-    <button v-show="rShow" @click="fn1()">放大</button>
-    <div v-show="rShow">
-      <magnify
-          :width="400"
-          :height="400"
-          :zoom="[50, 50]"
-          :zoom-rate="2"
-          :img="'demo.jpeg'"
-          :box-style="boxStyle"
-          :show-type="lShow"
-      ></magnify>
-      <magnify
-          :width="800"
-          :height="800"
-          :zoom="[100, 100]"
-          :zoom-rate="2"
-          :img="'logo.png'"
-          :box-style="boxStyle"
-          :show-type="lShow"
-      ></magnify>
-    </div>
-    <div v-show="!rShow">
-      <img-handle></img-handle>
-    </div>
+    <magnify
+        :width="400"
+        :height="400"
+        :zoom="[50, 50]"
+        :zoom-rate="2"
+        :img="'@/assets/demo.jpeg'"
+        :box-style="boxStyle"
+        :show-type="lShow"
+    ></magnify>
   </div>
 </template>
 
 <script>
 import magnify from "@/components/magnify"
-import imgHandle from "@/components/imgHandle";
+// import imgHandle from "@/components/imgHandle";
+
+// :img="'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.jj20.com%2Fup%2Fallimg%2F4k%2Fs%2F02%2F2109242332225H9-0-lp.jpg&refer=http%3A%2F%2Fimg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1650432800&t=57d38345811f970efc8ef49bf8d49960'"
 
 export default {
   components: {
     magnify,
-    imgHandle
+    // imgHandle
   },
   data() {
     return {

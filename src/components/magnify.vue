@@ -1,20 +1,39 @@
 <template>
   <div :style="originImg" style="display: inline-block;">
-    <div class="origin" :style="originImg" v-show="showType">
-      <img
-          :src="getImg"
-          :style="originImg"
-          alt=""
-      />
-      <div v-for="item in boxStyle" :style="item"></div>
-    </div>
+    <!--<div class="origin" :style="originImg" v-show="showType">-->
+    <!--  <img-->
+    <!--      :src="img"-->
+    <!--      :style="originImg"-->
+    <!--      alt=""-->
+    <!--  />-->
+    <!--  <div v-for="item in boxStyle" :style="item"></div>-->
+    <!--</div>-->
     <div class="large" :style="originImg" v-show="!showType">
       <img
-          :src="getImg"
+          :src="img"
           :style="largeImg"
           alt=""
       />
       <div v-for="item in box" :style="item"></div>
+    </div>
+    <div
+        v-show="showType"
+        class='origin'
+        :style="originImg"
+        ref='previewImgDiv'
+        @mouseenter="enterHandl"
+        @mousewheel="handleMousewheel"
+        @mousedown="handleMouseDown"
+        @mouseout="outHandle"
+    >
+      <img
+          :src="img"
+          :style="{
+          transform: `scale(${scale}) translate(${translateX}px, ${translateY}px)`,
+          originImg
+          }"
+          alt=""
+      />
     </div>
   </div>
 </template>
@@ -50,8 +69,6 @@ export default {
   },
   data() {
     return {
-      // public img: string = require(this.img)
-      getImg: require('@/assets/' + this.img),
       originImg: {
         width: this.width + 'px',
         height: this.height + 'px',
@@ -61,31 +78,16 @@ export default {
         height: this.height * this.zoomRate + 'px',
         transform: `translate(-${this.zoom[0] * this.zoomRate}px, -${this.zoom[1] * this.zoomRate}px)`
       },
-      box: []
+      box: [],
+      scale: 1,
+      translateX: 0,
+      translateY: 0
     }
   },
   mounted() {
     this.boxHandle()
   },
-  // computed: {
-  //   getImg() {
-  //     return {
-  //       ...this.img,
-  //       img: this.img && require(`../assets/${this.img}`)
-  //     }
-  //   }
-  // },
   methods: {
-    // const unit = {
-    //   px: 1,
-    //   vm: 1 << 1,
-    //   vh: 1 << 2,
-    //   rem: 1 << 3
-    // }
-    // getImg() {
-    //   const imgUrl = 'demo.jpeg';
-    //   const img = require('../assets/'+imgUrl);
-    // },
     boxHandle() {
       if (this.boxStyle.length === 0) return
       this.box = JSON.parse(JSON.stringify(this.boxStyle))
@@ -95,24 +97,52 @@ export default {
         item.top = (parseInt(item.top) - this.zoom[1]) * this.zoomRate + 'px'
         item.left = (parseInt(item.left) - this.zoom[0]) * this.zoomRate + 'px'
       })
+    },
+    handleMousewheel(event) {
+      if (event.wheelDelta < 0) {
+        if (this.scale === 0.2 || this.scale < 0.2) {
+          this.scale = 0.2
+          return
+        }
+        this.scale -= 0.1
+      } else if (event.wheelDelta > 0) {
+        if (this.scale === 2 || this.scale > 2) {
+          this.scale = 2
+          return
+        }
+        this.scale += 0.1
+      }
+    },
+    handleMouseDown(event) {
+      event.preventDefault()
+      if (event.target.tagName !== 'IMG') {
+        return false
+      }
+      const div = this.$refs.previewImgDiv
+      let originX = event.screenX
+      let originY = event.screenY
+      let translateX = this.translateX
+      let translateY = this.translateY
+      const move = (e) => {
+        let afterX = e.screenX
+        let afterY = e.screenY
+        this.translateX = translateX + (afterX - originX) / this.scale
+        this.translateY = translateY + (afterY - originY) / this.scale
+      }
+      div.addEventListener('mousemove', move)
+      div.addEventListener('mouseup', () => {
+        div.removeEventListener('mousemove', move)
+      })
+      div.addEventListener('mouseout', () => {
+        div.removeEventListener('mousemove', move)
+      })
+    },
+    enterHandl() {
+      document.body.style.overflow = 'hidden'
+    },
+    outHandle() {
+      document.body.style.overflow = 'visible'
     }
-    // isObject(x) {
-    //   return Object.prototype.toString.call(x) === '[object Object]'
-    // },
-    // clone(source) {
-    //   if (!isObject(source)) return source
-    //   let target = {}
-    //   for(let i in source) {
-    //     if (source.hasOwnProperty(i)) {
-    //       if (typeof source[i] === 'object') {
-    //         target[i] = clone(source[i])
-    //       } else {
-    //         target[i] = source[i]
-    //       }
-    //     }
-    //   }
-    //   return target
-    // }
   }
 }
 </script>
