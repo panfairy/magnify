@@ -8,32 +8,37 @@
     <!--  />-->
     <!--  <div v-for="item in boxStyle" :style="item"></div>-->
     <!--</div>-->
-    <div class="large" :style="originImg" v-show="!showType">
-      <img
-          :src="img"
-          :style="largeImg"
-          alt=""
-      />
-      <div v-for="item in box" :style="item"></div>
-    </div>
+    <!--<div class="large" :style="originImg" v-show="!showType">-->
+    <!--  <img-->
+    <!--      src="@/assets/demo.jpeg"-->
+    <!--      :style="largeImg"-->
+    <!--      alt=""-->
+    <!--  />-->
+    <!--  <div v-for="item in box" :style="item"></div>-->
+    <!--</div>-->
     <div
-        v-show="showType"
         class='origin'
         :style="originImg"
-        ref='previewImgDiv'
+        ref='originImg'
         @mouseenter="enterHandl"
         @mousewheel="handleMousewheel"
         @mousedown="handleMouseDown"
         @mouseout="outHandle"
     >
-      <img
-          :src="img"
-          :style="{
-          transform: `scale(${scale}) translate(${translateX}px, ${translateY}px)`,
-          originImg
+      <div>
+        <img
+            ref="largeImg"
+            class="img"
+            src="@/assets/demo.jpeg"
+            :style="{
+            transform: `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`,
+            width: showType ? 'inherit' : largeImg.width,
+            height: showType ? 'inherit' : largeImg.height
           }"
-          alt=""
-      />
+            alt=""
+        />
+        <div v-show="!showType" v-for="item in box" :style="item"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -71,7 +76,7 @@ export default {
     return {
       originImg: {
         width: this.width + 'px',
-        height: this.height + 'px',
+        height: this.height + 'px'
       },
       largeImg: {
         width: this.width * this.zoomRate + 'px',
@@ -115,9 +120,7 @@ export default {
     },
     handleMouseDown(event) {
       event.preventDefault()
-      if (event.target.tagName !== 'IMG') {
-        return false
-      }
+      if (event.target.tagName !== 'IMG') return
       const div = this.$refs.previewImgDiv
       let originX = event.screenX
       let originY = event.screenY
@@ -149,11 +152,17 @@ export default {
 
 <style scoped>
 .origin {
-  position: absolute;
+  overflow: hidden;
+  position: relative;
 }
 
 .large {
   overflow: hidden;
   position: absolute;
 }
+
+/*.img {*/
+/*  height: inherit;*/
+/*  width: inherit;*/
+/*}*/
 </style>
