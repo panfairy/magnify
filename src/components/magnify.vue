@@ -121,13 +121,16 @@ export default {
         }
         this.scale += 0.1
       }
+      if (!this.showType) {
+        this.$refs.box.forEach(item => {
+          item.style.transform = `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`
+        })
+      }
     },
     handleMouseDown(event) {
       event.preventDefault()
       if (event.target.tagName !== 'IMG') return
-      // const div = this.showType ? this.$refs.originImg : this.$refs.largeImg
       const div = this.$refs.originImg
-      console.log(div, 123)
       let originX = event.screenX
       let originY = event.screenY
       let translateX = this.translateX
@@ -137,6 +140,11 @@ export default {
         let afterY = e.screenY
         this.translateX = translateX + (afterX - originX) / this.scale
         this.translateY = translateY + (afterY - originY) / this.scale
+        if (!this.showType) {
+          this.$refs.box.forEach(item => {
+            item.style.transform = `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`
+          })
+        }
       }
       div.addEventListener('mousemove', move)
       div.addEventListener('mouseup', () => {
