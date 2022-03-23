@@ -25,15 +25,15 @@
         @mousedown="handleMouseDown"
         @mouseout="outHandle"
     >
-      <div>
+      <div ref="largeImg">
         <img
-            ref="largeImg"
+            ref=""
             class="img"
             src="@/assets/demo.jpeg"
             :style="{
             transform: `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`,
-            width: showType ? 'inherit' : largeImg.width,
-            height: showType ? 'inherit' : largeImg.height
+            width: showType ? originImg.width : largeImg.width,
+            height: showType ? originImg.height : largeImg.height
           }"
             alt=""
         />
@@ -121,7 +121,7 @@ export default {
     handleMouseDown(event) {
       event.preventDefault()
       if (event.target.tagName !== 'IMG') return
-      const div = this.$refs.previewImgDiv
+      const div = this.showType ? this.$refs.originImg : this.$refs.largeImg
       let originX = event.screenX
       let originY = event.screenY
       let translateX = this.translateX
