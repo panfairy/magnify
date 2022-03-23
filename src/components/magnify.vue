@@ -36,7 +36,7 @@
             }"
             alt=""
         />
-        <div ref="box" v-show="!showType" v-for="item in box" :style="item"></div>
+        <div ref="box" v-if="!showType" v-for="item in box" :style="item"></div>
       </div>
     </div>
   </div>
@@ -122,8 +122,10 @@ export default {
         this.scale += 0.1
       }
       if (!this.showType) {
-        this.$refs.box.forEach(item => {
+        this.$refs.box.forEach((item, index) => {
           item.style.transform = `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`
+          item.style.top = this.box[index].top * this.scale + 'px'
+          item.style.left = this.box[index].left * this.scale + 'px'
         })
       }
     },
