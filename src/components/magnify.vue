@@ -36,7 +36,7 @@
             }"
             alt=""
         />
-        <div ref="largeImg" v-show="!showType" v-for="item in box" :style="item"></div>
+        <div ref="box" v-show="!showType" v-for="item in box" :style="item"></div>
       </div>
     </div>
   </div>
@@ -80,7 +80,7 @@ export default {
       largeImg: {
         width: this.width * this.zoomRate + 'px',
         height: this.height * this.zoomRate + 'px',
-        transform: `translate(-${this.zoom[0] * this.zoomRate}px, -${this.zoom[1] * this.zoomRate}px)`
+        // transform: `translate(-${this.zoom[0] * this.zoomRate}px, -${this.zoom[1] * this.zoomRate}px)`
       },
       box: [],
       scale: 1,
@@ -125,7 +125,8 @@ export default {
     handleMouseDown(event) {
       event.preventDefault()
       if (event.target.tagName !== 'IMG') return
-      const div = this.showType ? this.$refs.originImg : this.$refs.largeImg
+      // const div = this.showType ? this.$refs.originImg : this.$refs.largeImg
+      const div = this.$refs.originImg
       console.log(div, 123)
       let originX = event.screenX
       let originY = event.screenY
