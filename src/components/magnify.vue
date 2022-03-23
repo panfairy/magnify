@@ -25,7 +25,11 @@
         @mousedown="handleMouseDown"
         @mouseout="outHandle"
     >
-      <div ref="largeImg">
+      <div ref="largeImg" :style="{
+        transform: `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`,
+        width: showType ? originImg.width : largeImg.width,
+        height: showType ? originImg.height : largeImg.height
+      }">
         <img
             class="img"
             src="@/assets/demo.jpeg"
@@ -124,8 +128,8 @@ export default {
       if (!this.showType) {
         this.$refs.box.forEach((item, index) => {
           item.style.transform = `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`
-          item.style.top = this.box[index].top * this.scale + 'px'
-          item.style.left = this.box[index].left * this.scale + 'px'
+          item.style.top = parseInt(this.box[index].top) * this.scale + 'px'
+          item.style.left = parseInt(this.box[index].left) * this.scale + 'px'
         })
       }
     },
