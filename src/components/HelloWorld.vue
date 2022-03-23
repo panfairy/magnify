@@ -2,6 +2,7 @@
   <div>
     <button @click="fn()">切换</button>
     <magnify
+        ref="magnify"
         :width="400"
         :height="400"
         :zoom="[50, 50]"
@@ -56,6 +57,7 @@ export default {
   methods: {
     fn() {
       this.rShow = !this.rShow
+      this.$refs.magnify.imgHandle()
     }
   },
 };

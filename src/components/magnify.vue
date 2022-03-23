@@ -27,17 +27,16 @@
     >
       <div ref="largeImg">
         <img
-            ref=""
             class="img"
             src="@/assets/demo.jpeg"
             :style="{
-            transform: `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`,
-            width: showType ? originImg.width : largeImg.width,
-            height: showType ? originImg.height : largeImg.height
-          }"
+              transform: `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`,
+              width: showType ? originImg.width : largeImg.width,
+              height: showType ? originImg.height : largeImg.height
+            }"
             alt=""
         />
-        <div v-show="!showType" v-for="item in box" :style="item"></div>
+        <div ref="largeImg" v-show="!showType" v-for="item in box" :style="item"></div>
       </div>
     </div>
   </div>
@@ -93,6 +92,11 @@ export default {
     this.boxHandle()
   },
   methods: {
+    imgHandle() {
+      this.translateX = 0
+      this.translateY = 0
+      this.scale = 1
+    },
     boxHandle() {
       if (this.boxStyle.length === 0) return
       this.box = JSON.parse(JSON.stringify(this.boxStyle))
@@ -122,6 +126,7 @@ export default {
       event.preventDefault()
       if (event.target.tagName !== 'IMG') return
       const div = this.showType ? this.$refs.originImg : this.$refs.largeImg
+      console.log(div, 123)
       let originX = event.screenX
       let originY = event.screenY
       let translateX = this.translateX
