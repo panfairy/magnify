@@ -34,9 +34,7 @@
             class="img"
             src="@/assets/demo.jpeg"
             :style="{
-              transform: `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`,
-              width: showType ? originImg.width : largeImg.width,
-              height: showType ? originImg.height : largeImg.height
+              transform: `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`
             }"
             alt=""
         />
@@ -173,7 +171,6 @@ export default {
 <style scoped>
 .origin {
   overflow: hidden;
-  position: relative;
 }
 
 .large {
@@ -181,8 +178,9 @@ export default {
   position: absolute;
 }
 
-/*.img {*/
-/*  height: inherit;*/
-/*  width: inherit;*/
-/*}*/
+.img {
+  height: 100%;
+  width: 100%;
+  object-fit: fill;
+}
 </style>
