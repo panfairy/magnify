@@ -20,16 +20,18 @@
         class='origin'
         :style="originImg"
         ref='originImg'
-        @mouseenter="enterHandl"
         @mousewheel="handleMousewheel"
         @mousedown="handleMouseDown"
-        @mouseout="outHandle"
     >
-      <div ref="largeImg" :style="{
-        transform: `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`,
-        width: originImg.width,
-        height: originImg.height
-      }">
+      <div
+          @mouseenter="enterHandl"
+          @mouseout="outHandle"
+          ref="largeImg" :style="{
+            transform: `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`,
+            width: originImg.width,
+            height: originImg.height
+          }"
+      >
         <img
             class="img"
             src="@/assets/demo.jpeg"
@@ -136,8 +138,14 @@ export default {
       if (!this.showType) {
         this.$refs.box.forEach((item, index) => {
           // item.style.transform = `translate(${this.translateX}px, ${this.translateY}px)`
-          item.style.top = parseInt(this.box[index].top) * this.scale + 'px'
-          item.style.left = parseInt(this.box[index].left) * this.scale + 'px'
+          // item.style.width = parseInt(this.box[index].width) * this.scale + 'px'
+          // item.style.height = parseInt(this.box[index].height) * this.scale + 'px'
+          // item.style.top = parseInt(this.box[index].top) * this.scale + 'px'
+          // item.style.left = parseInt(this.box[index].left) * this.scale + 'px'
+          item.setAttribute('width', parseInt(this.box[index].width) * this.scale + 'px')
+          item.setAttribute('height', parseInt(this.box[index].height) * this.scale + 'px')
+          item.setAttribute('top', parseInt(this.box[index].top) * this.scale + 'px')
+          item.setAttribute('left', parseInt(this.box[index].left) * this.scale + 'px')
         })
       }
     },
