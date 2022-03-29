@@ -27,14 +27,15 @@
     >
       <div ref="largeImg" :style="{
         transform: `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`,
-        width: showType ? originImg.width : largeImg.width,
-        height: showType ? originImg.height : largeImg.height
+        width: originImg.width,
+        height: originImg.height
       }">
         <img
             class="img"
             src="@/assets/demo.jpeg"
             :style="{
-              transform: `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`
+              width: 'inherit',
+              height: 'inherit'
             }"
             alt=""
         />
@@ -54,14 +55,14 @@ export default {
     img: {
       type: String
     },
-    zoomRate: {
-      type: Number,
-      default: 1
-    },
-    zoom: {
-      type: Array,
-      default: [0, 0]
-    },
+    // zoomRate: {
+    //   type: Number,
+    //   default: 1
+    // },
+    // zoom: {
+    //   type: Array,
+    //   default: [0, 0]
+    // },
     // width: {
     //   type: Number
     // },
@@ -81,11 +82,11 @@ export default {
         width: '',
         height: ''
       },
-      largeImg: {
-        width: '',
-        height: '',
-        // transform: `translate(-${this.zoom[0] * this.zoomRate}px, -${this.zoom[1] * this.zoomRate}px)`
-      },
+      // largeImg: {
+      //   width: '',
+      //   height: '',
+      //   transform: `translate(-${this.zoom[0] * this.zoomRate}px, -${this.zoom[1] * this.zoomRate}px)`
+      // },
       box: [],
       scale: 1,
       translateX: 0,
@@ -109,16 +110,14 @@ export default {
       this.height = JSON.parse(JSON.stringify(el.naturalHeight))
       this.originImg.width = this.width + 'px'
       this.originImg.height = this.height + 'px'
-      this.largeImg.width = this.width * this.zoomRate + 'px'
-      this.largeImg.height = this.height * this.zoomRate + 'px'
       if (this.boxStyle.length === 0) return
       this.box = JSON.parse(JSON.stringify(this.boxStyle))
-      this.box.forEach(item => {
-        item.width = parseInt(item.width) * this.zoomRate + 'px'
-        item.height = parseInt(item.height) * this.zoomRate + 'px'
-        item.top = (parseInt(item.top) - this.zoom[1]) * this.zoomRate + 'px'
-        item.left = (parseInt(item.left) - this.zoom[0]) * this.zoomRate + 'px'
-      })
+      // this.box.forEach(item => {
+      //   item.width = parseInt(item.width) * this.zoomRate + 'px'
+      //   item.height = parseInt(item.height) * this.zoomRate + 'px'
+      //   item.top = (parseInt(item.top) - this.zoom[1]) * this.zoomRate + 'px'
+      //   item.left = (parseInt(item.left) - this.zoom[0]) * this.zoomRate + 'px'
+      // })
     },
     handleMousewheel(event) {
       if (event.wheelDelta < 0) {
@@ -136,7 +135,7 @@ export default {
       }
       if (!this.showType) {
         this.$refs.box.forEach((item, index) => {
-          item.style.transform = `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`
+          // item.style.transform = `translate(${this.translateX}px, ${this.translateY}px)`
           item.style.top = parseInt(this.box[index].top) * this.scale + 'px'
           item.style.left = parseInt(this.box[index].left) * this.scale + 'px'
         })
@@ -155,11 +154,11 @@ export default {
         let afterY = e.screenY
         this.translateX = translateX + (afterX - originX) / this.scale
         this.translateY = translateY + (afterY - originY) / this.scale
-        if (!this.showType) {
-          this.$refs.box.forEach(item => {
-            item.style.transform = `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`
-          })
-        }
+        // if (!this.showType) {
+        //   this.$refs.box.forEach(item => {
+        //     item.style.transform = `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`
+        //   })
+        // }
       }
       div.addEventListener('mousemove', move)
       div.addEventListener('mouseup', () => {
@@ -184,14 +183,14 @@ export default {
   overflow: hidden;
 }
 
-.large {
-  overflow: hidden;
-  position: absolute;
-}
+/*.large {*/
+/*  overflow: hidden;*/
+/*  position: absolute;*/
+/*}*/
 
-.img {
-  /*height: 100%;*/
-  /*width: 100%;*/
-  /*object-fit: fill;*/
-}
+/*.img {*/
+/*  height: 100%;*/
+/*  width: 100%;*/
+/*  object-fit: fill;*/
+/*}*/
 </style>

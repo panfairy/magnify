@@ -3,8 +3,6 @@
     <button @click="fn()">切换</button>
     <magnify
         ref="magnify"
-        :zoom="[50, 50]"
-        :zoom-rate="2"
         :img="'@/assets/demo.jpeg'"
         :box-style="boxStyle"
         :show-type="rShow"
@@ -31,7 +29,7 @@ export default {
           position: 'absolute',
           top: '0',
           left: '0',
-          border: '3px solid red'
+          border: '1px solid red'
         },
         {
           width: '150px',
@@ -39,7 +37,7 @@ export default {
           position: 'absolute',
           top: '100px',
           left: '100px',
-          border: '2px solid red'
+          border: '1px solid red'
         },
         {
           width: '100px',
@@ -47,7 +45,7 @@ export default {
           position: 'absolute',
           top: '200px',
           left: '200px',
-          border: '2px solid red'
+          border: '1px solid red'
         }
       ]
     }
