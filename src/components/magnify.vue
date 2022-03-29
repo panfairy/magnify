@@ -62,12 +62,12 @@ export default {
       type: Array,
       default: [0, 0]
     },
-    width: {
-      type: Number
-    },
-    height: {
-      type: Number
-    },
+    // width: {
+    //   type: Number
+    // },
+    // height: {
+    //   type: Number
+    // },
     boxStyle: {
       type: Array,
       default: []
@@ -75,13 +75,15 @@ export default {
   },
   data() {
     return {
+      width: '',
+      height: '',
       originImg: {
-        width: this.width + 'px',
-        height: this.height + 'px'
+        width: '',
+        height: ''
       },
       largeImg: {
-        width: this.width * this.zoomRate + 'px',
-        height: this.height * this.zoomRate + 'px',
+        width: '',
+        height: '',
         // transform: `translate(-${this.zoom[0] * this.zoomRate}px, -${this.zoom[1] * this.zoomRate}px)`
       },
       box: [],
@@ -91,7 +93,9 @@ export default {
     }
   },
   mounted() {
-    this.boxHandle()
+    window.onload = () => {
+      this.boxHandle()
+    }
   },
   methods: {
     imgHandle() {
@@ -100,6 +104,13 @@ export default {
       this.scale = 1
     },
     boxHandle() {
+      let el = document.getElementsByClassName('img')[0]
+      this.width = JSON.parse(JSON.stringify(el.naturalWidth))
+      this.height = JSON.parse(JSON.stringify(el.naturalHeight))
+      this.originImg.width = this.width + 'px'
+      this.originImg.height = this.height + 'px'
+      this.largeImg.width = this.width * this.zoomRate + 'px'
+      this.largeImg.height = this.height * this.zoomRate + 'px'
       if (this.boxStyle.length === 0) return
       this.box = JSON.parse(JSON.stringify(this.boxStyle))
       this.box.forEach(item => {
@@ -179,8 +190,8 @@ export default {
 }
 
 .img {
-  height: 100%;
-  width: 100%;
+  /*height: 100%;*/
+  /*width: 100%;*/
   /*object-fit: fill;*/
 }
 </style>

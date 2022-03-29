@@ -3,8 +3,6 @@
     <button @click="fn()">切换</button>
     <magnify
         ref="magnify"
-        :width="400"
-        :height="400"
         :zoom="[50, 50]"
         :zoom-rate="2"
         :img="'@/assets/demo.jpeg'"
