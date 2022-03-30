@@ -1,21 +1,5 @@
 <template>
   <div :style="originImg" style="display: inline-block;">
-    <!--<div class="origin" :style="originImg" v-show="showType">-->
-    <!--  <img-->
-    <!--      :src="img"-->
-    <!--      :style="originImg"-->
-    <!--      alt=""-->
-    <!--  />-->
-    <!--  <div v-for="item in boxStyle" :style="item"></div>-->
-    <!--</div>-->
-    <!--<div class="large" :style="originImg" v-show="!showType">-->
-    <!--  <img-->
-    <!--      src="@/assets/demo.jpeg"-->
-    <!--      :style="largeImg"-->
-    <!--      alt=""-->
-    <!--  />-->
-    <!--  <div v-for="item in box" :style="item"></div>-->
-    <!--</div>-->
     <div
         class='origin'
         :style="originImg"
@@ -57,20 +41,6 @@ export default {
     img: {
       type: String
     },
-    // zoomRate: {
-    //   type: Number,
-    //   default: 1
-    // },
-    // zoom: {
-    //   type: Array,
-    //   default: [0, 0]
-    // },
-    // width: {
-    //   type: Number
-    // },
-    // height: {
-    //   type: Number
-    // },
     boxStyle: {
       type: Array,
       default: []
@@ -84,11 +54,6 @@ export default {
         width: '',
         height: ''
       },
-      // largeImg: {
-      //   width: '',
-      //   height: '',
-      //   transform: `translate(-${this.zoom[0] * this.zoomRate}px, -${this.zoom[1] * this.zoomRate}px)`
-      // },
       box: [],
       scale: 1,
       translateX: 0,
@@ -114,12 +79,6 @@ export default {
       this.originImg.height = this.height + 'px'
       if (this.boxStyle.length === 0) return
       this.box = JSON.parse(JSON.stringify(this.boxStyle))
-      // this.box.forEach(item => {
-      //   item.width = parseInt(item.width) * this.zoomRate + 'px'
-      //   item.height = parseInt(item.height) * this.zoomRate + 'px'
-      //   item.top = (parseInt(item.top) - this.zoom[1]) * this.zoomRate + 'px'
-      //   item.left = (parseInt(item.left) - this.zoom[0]) * this.zoomRate + 'px'
-      // })
     },
     handleMousewheel(event) {
       if (event.wheelDelta < 0) {
@@ -135,19 +94,6 @@ export default {
         }
         this.scale += 0.1
       }
-      if (!this.showType) {
-        this.$refs.box.forEach((item, index) => {
-          // item.style.transform = `translate(${this.translateX}px, ${this.translateY}px)`
-          // item.style.width = parseInt(this.box[index].width) * this.scale + 'px'
-          // item.style.height = parseInt(this.box[index].height) * this.scale + 'px'
-          // item.style.top = parseInt(this.box[index].top) * this.scale + 'px'
-          // item.style.left = parseInt(this.box[index].left) * this.scale + 'px'
-          item.setAttribute('width', parseInt(this.box[index].width) * this.scale + 'px')
-          item.setAttribute('height', parseInt(this.box[index].height) * this.scale + 'px')
-          item.setAttribute('top', parseInt(this.box[index].top) * this.scale + 'px')
-          item.setAttribute('left', parseInt(this.box[index].left) * this.scale + 'px')
-        })
-      }
     },
     handleMouseDown(event) {
       event.preventDefault()
@@ -162,11 +108,6 @@ export default {
         let afterY = e.screenY
         this.translateX = translateX + (afterX - originX) / this.scale
         this.translateY = translateY + (afterY - originY) / this.scale
-        // if (!this.showType) {
-        //   this.$refs.box.forEach(item => {
-        //     item.style.transform = `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`
-        //   })
-        // }
       }
       div.addEventListener('mousemove', move)
       div.addEventListener('mouseup', () => {
@@ -190,15 +131,4 @@ export default {
 .origin {
   overflow: hidden;
 }
-
-/*.large {*/
-/*  overflow: hidden;*/
-/*  position: absolute;*/
-/*}*/
-
-/*.img {*/
-/*  height: 100%;*/
-/*  width: 100%;*/
-/*  object-fit: fill;*/
-/*}*/
 </style>

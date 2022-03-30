@@ -12,12 +12,10 @@
 
 <script>
 import magnify from "@/components/magnify"
-// import imgHandle from "@/components/imgHandle";
 
 export default {
   components: {
-    magnify,
-    // imgHandle
+    magnify
   },
   data() {
     return {
