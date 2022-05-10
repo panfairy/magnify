@@ -10,7 +10,9 @@
       <div
           @mouseenter="enterHandl"
           @mouseout="outHandle"
-          ref="largeImg" :style="{
+          ref="largeImg"
+          class="largeImg"
+          :style="{
             transform: `scale(${this.scale}) translate(${this.translateX}px, ${this.translateY}px)`,
             width: originImg.width,
             height: originImg.height
@@ -25,13 +27,16 @@
             }"
             alt=""
         />
-        <div ref="box" v-if="!showType" v-for="item in box" :style="item"></div>
+        <div ref="box" v-show="!showType" v-for="item in box" :style="item"></div>
       </div>
+      <div v-show="!showType" class="contain"></div>
     </div>
   </div>
 </template>
 
 <script>
+import toCanvas from "@/utils";
+
 export default {
   props: {
     showType: {
@@ -66,10 +71,13 @@ export default {
     }
   },
   methods: {
-    imgHandle() {
+    async imgHandle() {
       this.translateX = 0
       this.translateY = 0
       this.scale = 1
+      if (!this.showType) {
+        await toCanvas(document.getElementsByClassName('largeImg')[0])
+      }
     },
     boxHandle() {
       let el = document.getElementsByClassName('img')[0]
